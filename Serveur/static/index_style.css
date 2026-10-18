@@ -1,0 +1,56 @@
+.button {
+  border: 2px solid black;
+    border-color: #0d6efd;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+    align-items: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 30px;
+  margin: 4px 2px;
+     border-radius: 100px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#map {
+      height: 1000px;   /* Set map height */
+      width: 100%;
+    }
+.TITRE_CARTE {
+        background-color: #FFFFFF;
+        border: 0px solid #0d6efd;
+        border-radius: 100px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 24px;
+        color:black;
+        text-align:center;
+        text-decoration: underline;
+        font-weight: bold;
+    }
+table, th, td {border: 3px solid #716b6b;}
+table{
+    width: 100%;
+}
+.container{
+    height: 75vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.columns{
+    background-color: red;
+    width: 33%;
+    height: 100%;
+    border-radius: 20px;
+    border:1px solid black;
+    box-shadow: black 2px 2px 2px;
+    transition: 0.4s;
+}
+.column:hover{
+    box-shadow: #0d6efd 10px 10px 10px;
+}
+body {
+	padding-left:70px;
+	padding-right:70px;
+}

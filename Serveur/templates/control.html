@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head >
+	<!-- Required meta tags -->
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	    <!-- Bootstrap CSS -->
+	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	  <title>Carte</title>
+
+	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script><script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+	        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+	        crossorigin=""/>
+
+	<style>
+		#temperature, #gps {
+			display:flex;
+		  max-width: 100%x;
+		  margin: 2px 0px;
+		  white-space: pre-line; /* pour respecter les \n */
+		  font-size:25px;
+		}
+		#displey_mesures ,#actions,#out{
+			height: 35vh;
+			width: 50%;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			align-items: center;
+		  align-self:;
+		}
+		#map {
+		      height: 35vh;   /* Set map height */
+		      width: 50%;
+		    }
+		#l1, #l2 {
+			display:flex; 
+			border: 2px solid black;
+    		border-color: #000000;
+			height: 35vh;
+			width: 100%;
+			align-item:center;
+			justify-content: space-around;
+			margin:10px;
+		}
+		#moteur_comand,#code{
+			display:flex; 
+			width:50px;
+		}
+		# l0{
+			display:flex;
+			height: 5vh;
+			width: 100%;
+			text-align: center;
+			item-align:center ;
+			text-decoration:underline;
+		}
+		
+		.boutton_mesures{
+			border:1px solid black;
+			border-radius:12px;
+			background-color: #FFFFFF;
+		}
+		.button_mesures :hover {
+			background-color:blue;
+		}
+	</style>
+</head>
+<body>
+
+<div id="l0">
+	<h1>Menu de controle<h1>
+</div>
+
+<div id="l1">
+	<div id="displey_mesures">
+		<p id="temperature"></p>
+		<p id="gps"></p>
+	</div >
+	<div id="map"></div>
+</div>
+<div id="l2">
+	<div id="actions">
+		<button class ="boutton_mesures" onclick="priseMesure() ">Prise de mesures </button>
+		<button class ="boutton_mesures" onclick="arret_bateau() ">Arret bateau </button>	
+		<button class ="boutton_mesures" onclick="relance_bateau() ">Relance bateau </button>
+	</div>
+	<pre id="out"></pre>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
+<script>
+async function priseMesure(){
+        fetch('/mesures');
+        }
+async function arret_bateau(){
+	fetch('/arret');       
+	}
+async function relance_bateau(){
+        fetch('/reprendre');
+        }
+async function t() {
+    const  temperature= document.getElementById("temperature");
+    try {
+        const response = await fetch('/get_last');
+        const data = await response.json();
+		temperature.textContent += "Dernière température : " + data.temperature + "\n";
+
+    } catch (err) {
+        temperature.textContent += "Erreur récupération données\n";
+    }
+}
+
+
+
+async function g() {
+    const  gpsEL= document.getElementById("gps");
+    try {
+        const response = await fetch('/get_last');
+        const data = await response.json();
+		const gps = JSON.parse(data.gps);
+		gpsEL.textContent += "Dernière position : " + data.gps + "\n";
+		
+	    var marker = L.marker(gps,{icon: Icon_bateau}).addTo(map);
+			//marker.bindPopup(`<b>num=${data.id}</b><br>t=${data.temperature} co=${gps}`).openPopup();
+			map.setView(gps, 14);
+			
+
+
+
+        
+
+    } catch (err) {
+        gps.textContent += "Erreur récupération données\n";
+    }
+}
+
+  window.addEventListener('load', t);
+  window.addEventListener('load', g);  
+  var Icon_bateau = L.icon({iconUrl: '../static/image/bateau.png',iconSize: [38, 40],iconAnchor: [22, 94],popupAnchor: [-3, -76],});
+  var map = L.map('map').setView([46.37, 6.25 ], 10);
+      // Add tile layer
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+</script>
+
+</body>
+</html>
