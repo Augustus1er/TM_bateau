@@ -1,2 +1,4 @@
 # TM_bateau
-Travail de maturité du gymnase de Nyon. L'objectif de ce travail est de créer un bateau autonome capable mesurer la température du lac Léman
+Lorsque nous avons pu choisir une thématique pour notre Travail de Maturité, notre intérêt s’est immédiatement tourné vers la physique et l’informatique. Hésitant entre les deux thèmes, nous avons finalement choisi « Sciences et Bricolage » ce dernier nous laissant plus de liberté sur le choix de notre travail. Nous avons entrepris la construction d’un bateau qui devrait être capable de mesurer la température de l’eau du lac Léman en autonomie puis de les transmettre à un serveur afin de les afficher sur internet. Nous voulions que ce dernier soit entièrement issu de notre travail personnel. Nous avons donc abordé plusieurs aspects tel que la conception des coques, la gestion des moteurs, la récupération, le transfert et l’affichage et l’analyse des données.
+Une fois la conception du bateau terminée nous avons effectué des mesures. Puis nous les avons comparées avec les modèles de prévision.
+le PDF de notre rapport permet de recréer entièrement notre projet.
